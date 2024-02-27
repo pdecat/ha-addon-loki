@@ -5,7 +5,7 @@ ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:stable
 FROM ${BUILD_FROM}
 
 # https://github.com/grafana/loki/releases
-ARG LOKI_VERSION=2.6.1
+ARG LOKI_VERSION=2.9.4
 
 # add Loki and Nginx
 RUN set -eux; \
