@@ -1,5 +1,5 @@
 # https://github.com/hassio-addons/addon-base/releases
-ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64
+ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:stable
 
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
@@ -12,7 +12,7 @@ RUN set -eux; \
     apk update; \
     \
     apk add --no-cache --virtual .build-deps \
-        unzip=6.0-r9 \
+        unzip=6.0-r14 \
         ; \
     APKARCH="$(apk --print-arch)"; \
     case "$APKARCH" in \
@@ -31,8 +31,8 @@ RUN set -eux; \
     apk del .build-deps; \
     \
     apk add --no-cache \
-        ca-certificates=20220614-r0 \
-        nginx=1.22.0-r1 \
+        ca-certificates=20230506-r0 \
+        nginx=1.24.0-r15 \
         ; \
     update-ca-certificates; \
     nginx -v; \
@@ -59,9 +59,6 @@ RUN set -eux; \
         /var/lib/nginx \
         /var/log/nginx \
         ;
-
-# See https://github.com/grafana/loki/issues/1928
-RUN [ ! -e /etc/nsswitch.conf ] && echo 'hosts: files dns' > /etc/nsswitch.conf    
 
 COPY --chown=abc:abc rootfs /
 WORKDIR /data/loki
